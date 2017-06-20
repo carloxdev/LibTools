@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
-# Librerias Python
+# Python's Libraries
 import re
 import shutil
 import os
 
-# Librerias Propias
+# Own's Libraries
 from validation import Error
 
 """Estandariazacion de varibales:
