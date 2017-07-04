@@ -5,8 +5,9 @@ import re
 import shutil
 import os
 
+
 # Own's Libraries
-from validation import Error
+from data import Error
 
 """Estandariazacion de varibales:
 
@@ -34,6 +35,9 @@ class Carpeta(object):
 
     def __init__(self, _abspath):
         self.abspath = _abspath
+
+    def __str__(self):
+        return self.abspath
 
     def exist(self, _origin):
 
@@ -90,6 +94,7 @@ class Carpeta(object):
             code = os.system("mkdir " + self.abspath)
 
         except Exception as error:
+
             raise Error(
                 type(error).__name__,
                 origin,
@@ -269,8 +274,11 @@ class Carpeta(object):
                 path_temporal = new_carpeta.abspath
 
             except Error as e:
+                path_temporal = new_carpeta.abspath
+
                 if e.control == "carpeta ya existe":
                     print e.mensaje
+
                 else:
                     raise Error(
                         "validacion",
@@ -349,13 +357,14 @@ class Archivo(object):
                 str(error)
             )
 
-    def copy(self, _basepath_to, _replace=False):
+    def copy(self, _folder_to, _replace=False):
 
         origin = "Archivo.copy()"
 
         self.exist(origin)
 
-        carpeta_destino = Carpeta(_basepath_to)
+        carpeta_destino = _folder_to
+        # carpeta_destino = Carpeta(_basepath_to)
         carpeta_destino.exist(origin)
 
         archivo_nuevo = Archivo(carpeta_destino, self.nombre)
@@ -378,13 +387,14 @@ class Archivo(object):
                 str(error)
             )
 
-    def move(self, _basepath_new, _replace=False):
+    def move(self, _folder_to, _replace=False):
 
         origin = "Archivo.move()"
 
         self.exist(origin)
 
-        carpeta_destino = Carpeta(_basepath_new)
+        carpeta_destino = _folder_to
+        # carpeta_destino = Carpeta(_basepath_new)
         carpeta_destino.exist(origin)
 
         archivo_nuevo = Archivo(carpeta_destino, self.nombre)
