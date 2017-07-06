@@ -80,6 +80,39 @@ class Carpeta(object):
 
         return basepath
 
+    def get_Files(self):
+
+        origin = "Carpeta.get_Files()"
+
+        self.exist(origin)
+
+        lista_archivos = []
+
+        try:
+            archivos = os.walk(self.abspath)
+
+            for directorio, subdirectorios, lista_nombreArchivos in archivos:
+
+                for nombre_archivo in lista_nombreArchivos:
+                    # (title, extension) = os.path.splitext(nombre_archivo)
+                    folder = Carpeta(directorio)
+                    lista_archivos.append(
+                        Archivo(folder, nombre_archivo)
+                    )
+
+                    # if extension == _extension.upper() or extension == _extension.lower():
+
+            return lista_archivos
+
+        except Exception, error:
+
+            raise Error(
+                type(error).__name__,
+                origin,
+                "",
+                str(error)
+            )
+
     def create(self):
 
         origin = "Carpeta.create()"
