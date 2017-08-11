@@ -342,6 +342,19 @@ class Archivo(object):
 
         return abspath
 
+    def validate_Extension(self, _extension):
+
+        origin = "Archivo.validate_Extension()"
+
+        self.exist(origin)
+
+        if self.extension == _extension.upper() \
+            or self.extension == _extension.lower():
+
+            return True
+        else:
+            return False
+
     def exist(self, _origin):
 
         if os.path.isfile(self.get_Abspath()) is False:
