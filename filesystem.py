@@ -184,12 +184,12 @@ class Carpeta(object):
             )
 
     def find_File_ByExtension(self, _extension):
-        """ Devuelve una lista con todos los archivos de determinada extencion
+        """ Devuelve una lista con todos los archivos de determinada extencion.
 
             PARAMETROS:
                 _extension: Tipo de archivos que se buscara. Formato: ".txt"
-        """
 
+        """
         origin = "Carpeta.find_File_ByExtension()"
 
         self.exist(origin)
@@ -221,13 +221,13 @@ class Carpeta(object):
             )
 
     def delete_DuplicateFiles_ByExtension(self, _extension):
-        """ Elimina archivos duplicados de determinada ruta
+        """ Elimina archivos duplicados de determinada ruta.
 
             PARAMETROS:
                 _extension: Extension de los archivos que se eliminaran,
                             en caso de existir. Formato: ".txt"
-        """
 
+        """
         origin = "Carpeta.delete_DuplicateFiles_ByExtension()"
 
         self.exist(origin)
@@ -370,8 +370,11 @@ class Archivo(object):
             )
 
     def create(self):
-        """ Metodo que crea el archivo en el sistema de archivos """
+        """ Metodo que crea el archivo en el sistema de archivos.
 
+            Nota: Si el archivo ya existe, este se sobreescribe
+
+        """
         origin = "Archivo.create()"
 
         self.carpeta.exist(origin)
@@ -448,6 +451,29 @@ class Archivo(object):
             )
 
         except Exception as error:
+            raise Error(
+                type(error).__name__,
+                origin,
+                "",
+                str(error)
+            )
+
+    def write(self, _value):
+        """ Metodo que permite escribir en un archivo.
+
+            En caso de que no exista, crea el archivo
+
+        """
+        origin = "Archivo.write()"
+
+        try:
+            self.file_object = open(self.get_Abspath(), "wb")
+            self.file_object.write(_value)
+            self.file_object.close()
+
+            print "Archivo %s guardado en el folder %s" % (self.nombre, self.carpeta.abspath)
+
+        except Exception, error:
             raise Error(
                 type(error).__name__,
                 origin,

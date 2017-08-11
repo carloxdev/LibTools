@@ -41,58 +41,60 @@ class Error(Exception):
 class Validator(object):
 
     @classmethod
-    def convertToJulianJDE(self, _date):
+    def convert_ToJulianJDE(self, _date):
 
         jdedate = (1000 * (_date.year - 1900) + int(_date.strftime("%j")))
 
         return int(jdedate)
 
     @classmethod
-    def convertToInt(self, data, default=0):
+    def convert_ToInt(self, _data, default=0):
         try:
-            value = int(data)
+            value = int(_data)
         except Exception:
             value = default
 
         return value
 
     @classmethod
-    def convertToFloat(self, data, default=0.0):
+    def convert_ToFloat(self, _data, default=0.0):
         try:
-            value = float(data)
+            value = float(_data)
         except Exception:
             value = default
 
         return value
 
     @classmethod
-    def convertToChar(self, data, default=""):
-        if data is None:
+    def convert_ToChar(self, _data, default=""):
+        if _data is None:
             return ""
+        elif isinstance(_data, int):
+            return str(_data)
         else:
-            return data.encode("utf-8")
+            return _data.encode("utf-8")
 
     @classmethod
-    def convertToDate(self, data, hora=True):
+    def convert_ToDate(self, _data, hora=True):
 
-        if data is None:
+        if _data is None:
             return None
         else:
 
-            data = data.replace("Z", "")
+            _data = _data.replace("Z", "")
 
             if hora:
 
-                fecha = parser.parse(data)
+                fecha = parser.parse(_data)
                 fecha = fecha.replace(microsecond=0)
 
                 return fecha
 
             else:
-                return datetime.strptime(data, '%Y-%m-%d')
+                return datetime.strptime(_data, '%Y-%m-%d')
 
     @classmethod
-    def convertToUrl(self, ruta, file_name):
+    def convert_ToUrl(self, ruta, file_name):
         url = os.path.join(ruta, file_name)
 
         return url.replace("\\", "/")
